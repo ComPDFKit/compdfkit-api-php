@@ -1,0 +1,26 @@
+{
+    "name": "compdfkit/compdfkit-api-php",
+    "description": "ComPDFKit API PHP SDK",
+    "homepage": "https://api.compdf.com/api-reference/overview",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "compdfkit",
+            "homepage": "https://api.compdf.com"
+        }
+    ],
+    "require": {
+        "php":">=7.0",
+        "guzzlehttp/guzzle": ">=6.5",
+        "ext-json": "*",
+        "ext-curl": "*"
+    },
+    "require-dev" : {
+        "guzzlehttp/guzzle": ">=6.5"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {"ComPDFKit\\": "src"}
+    }
+}

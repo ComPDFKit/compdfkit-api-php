@@ -34,12 +34,14 @@ class CPDFHttpClient
         if(!empty($options)){
             if(isset($options['multipart'])){
                 $body['multipart'] = $options['multipart'];
-            }elseif($method == CPDFURL::HTTP_METHOD_POST){
-                $body['headers']['Content-Type'] = 'application/json';
-                $body['json'] = $options;
-            }elseif($method == CPDFURL::HTTP_METHOD_GET){
-                $body['headers']['Content-Type'] = 'application/json';
-                $body['query'] = $options;
+            }else{
+                if($method == CPDFURL::HTTP_METHOD_POST){
+                    $body['headers']['Content-Type'] = 'application/json';
+                    $body['json'] = $options;
+                }elseif($method == CPDFURL::HTTP_METHOD_GET){
+                    $body['headers']['Content-Type'] = 'application/json';
+                    $body['query'] = $options;
+                }
             }
         }
 

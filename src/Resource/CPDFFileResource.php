@@ -144,7 +144,10 @@ class CPDFFileResource
     }
 
     /**
-     * @param string $front Is it at the front
+     * @param string $front  Setting watermark layer
+     * "0" false: No need to pin it to the top
+     * "1" true: Pin it to the top
+     * null  No need to pin it to the top
      * @return $this
      */
     public function setFront($front){
@@ -345,11 +348,12 @@ class CPDFFileResource
     /**
      * @param $taskId
      * @param null $password
+     * @param null $language 1:English, 2:Chinese
      * @return CPDFClient
      * @throws CPDFException
      */
-    public function uploadFile($taskId, $password = null){
-        $fileInfo = $this->client->uploadFile($taskId, $this->filepath, $password, $this->options);
+    public function uploadFile($taskId, $password = null, $language = null){
+        $fileInfo = $this->client->uploadFile($taskId, $this->filepath, $password, $this->options, $language);
         $this->fileKey = $fileInfo['fileKey'];
         $this->fileUrl = $fileInfo['fileUrl'];
 

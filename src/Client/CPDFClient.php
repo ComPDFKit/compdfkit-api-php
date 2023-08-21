@@ -89,11 +89,17 @@ class CPDFClient
 
     /**
      * @param $fileKey
+     * @param null $language 1:English, 2:Chinese
      * @return mixed
      * @throws CPDFException
      */
-    public function getFileInfoByKey($fileKey){
-        return $this->httpClient->send(CPDFURL::HTTP_METHOD_GET, CPDFURL::API_V1_FILE_INFO, $this->getAuthorization(), ['fileKey'=>$fileKey]);
+    public function getFileInfoByKey($fileKey, $language = null){
+        $options = ['fileKey'=>$fileKey];
+        if($language){
+            $options['language'] = $language;
+        }
+
+        return $this->httpClient->send(CPDFURL::HTTP_METHOD_GET, CPDFURL::API_V1_FILE_INFO, $this->getAuthorization(), $options);
     }
 
     /**
@@ -118,13 +124,20 @@ class CPDFClient
 
     /**
      * @param $executeType
+     * @param int $language 1:English, 2:Chinese
      * @return CPDFClient
      * @throws CPDFException
      */
-    public function createTask($executeType){
+    public function createTask($executeType, $language = null){
         $url = str_replace('{executeTypeUrl}', $executeType, CPDFURL::API_V1_CREATE_TASK);
 
-        $result = $this->httpClient->send(CPDFURL::HTTP_METHOD_GET, $url, $this->getAuthorization());
+        $options = [];
+
+        if($language){
+            $options['language'] = $language;
+        }
+
+        $result = $this->httpClient->send(CPDFURL::HTTP_METHOD_GET, $url, $this->getAuthorization(), $options);
         $taskId = $result['taskId'];
 
         $this->taskResource = new CPDFTaskResource($taskId);
@@ -148,10 +161,11 @@ class CPDFClient
      * @param $filePath
      * @param null $password
      * @param array $params
+     * @param int $language
      * @return mixed
      * @throws CPDFException
      */
-    public function uploadFile($taskId, $filePath, $password = null, $params = []){
+    public function uploadFile($taskId, $filePath, $password = null, $params = [], $language = null){
         if(!file_exists($filePath)){
             throw new CPDFException('uploadFile', 'File does not exist.');
         }
@@ -193,25 +207,43 @@ class CPDFClient
             $options['multipart'][] = ['name' => 'parameter', 'contents' => json_encode($params)];
         }
 
+        if($language){
+            $options['multipart'][] = ['name' => 'language', 'contents' => $language];
+        }
+
         return $this->httpClient->send(CPDFURL::HTTP_METHOD_POST, CPDFURL::API_V1_UPLOAD_FILE, $this->getAuthorization(), $options);
     }
 
     /**
      * @param $taskId
+     * @param null $language 1:English, 2:Chinese
      * @return CPDFClient
      * @throws CPDFException
      */
-    public function executeTask($taskId){
-        $this->httpClient->send(CPDFURL::HTTP_METHOD_GET, CPDFURL::API_V1_EXECUTE_TASK, $this->getAuthorization(), ['taskId'=>$taskId]);
+    public function executeTask($taskId, $language = null){
+        $options = ['taskId' => $taskId];
+
+        if($language){
+            $options['language'] = $language;
+        }
+
+        $this->httpClient->send(CPDFURL::HTTP_METHOD_GET, CPDFURL::API_V1_EXECUTE_TASK, $this->getAuthorization(), $options);
         return $this;
     }
 
     /**
      * @param $taskId
+     * @param null $language 1:English, 2:Chinese
      * @return mixed
      * @throws CPDFException
      */
-    public function getTaskInfo($taskId){
-        return $this->httpClient->send(CPDFURL::HTTP_METHOD_GET, CPDFURL::API_V1_TASK_INFO, $this->getAuthorization(), ['taskId'=>$taskId]);
+    public function getTaskInfo($taskId, $language = null){
+        $options = ['taskId' => $taskId];
+
+        if($language){
+            $options['language'] = $language;
+        }
+
+        return $this->httpClient->send(CPDFURL::HTTP_METHOD_GET, CPDFURL::API_V1_TASK_INFO, $this->getAuthorization(), $options);
     }
 }

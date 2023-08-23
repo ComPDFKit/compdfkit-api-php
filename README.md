@@ -132,4 +132,5 @@ See ***"Samples"*** folder in this folder.
 
 ## Related Resources
 
+* [ComPDFKit API Libraries](https://api.compdf.com/api-libraries/overview)
 * [ComPDFKit API Documentation](https://api.compdf.com/api/docs/introduction)

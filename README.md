@@ -20,7 +20,7 @@ You can install the library via Composer. Run the following command.
 ``` shell script
 composer require compdfkit/compdfkit-api-php
 ```
-Alternatively, you can add "compdfkit/compdfkit-api-php": "^1.2.4" to your ***"composer.json"*** file and then run it.
+Alternatively, you can add "compdfkit/compdfkit-api-php": "^1.3.2" to your ***"composer.json"*** file and then run it.
 ``` shell script 
 composer update
 ```
